@@ -7,7 +7,7 @@ from decouple import config
 
 
 if __name__ == "__main__":
-    settings_module = config("DJANGO_SETTINGS_MODULE", mysite.settings)
+    settings_module = config("DJANGO_SETTINGS_MODULE", 'duda.settings.test')
 
     if sys.argv[1] == "test":
         if settings_module:
