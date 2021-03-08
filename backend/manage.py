@@ -7,7 +7,7 @@ from decouple import config
 
 
 if __name__ == "__main__":
-    settings_module = config("DJANGO_SETTINGS_MODULE", 'duda.settings.test')
+    settings_module = config("DJANGO_SETTINGS_MODULE", 'HTTP_X_FORWARDED_PROTO')
 
     if sys.argv[1] == "test":
         if settings_module:
