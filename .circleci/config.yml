@@ -19,7 +19,7 @@ jobs:
           command: sudo chown -R circleci:circleci /usr/local/lib/python3.7/site-packages
       - run:
           command: pip install requests pip-tools --upgrade
-      
+
       - restore_cache:
           keys:
             - v1-pip-cache-{{ .Branch }}-{{ .Environment.CIRCLE_SHA1 }}
@@ -47,7 +47,7 @@ jobs:
           key: npm-cache-{{ .Branch }}-{{ .Environment.CIRCLE_SHA1 }}
           paths:
             - node_modules
-      
+
       - run:
           command: npm run build
       - run:
@@ -75,7 +75,7 @@ jobs:
             DJANGO_SETTINGS_MODULE: 'duda.settings.production'
             SECRET_KEY: "$(python -c 'import uuid; print(uuid.uuid4().hex + uuid.uuid4().hex)')"
             DATABASE_URL: 'sqlite:///'
-            ALLOWED_HOSTS: '.example.org'
+            ALLOWED_HOSTS: '.dudapokebattle.herokuapp.com'
             SENDGRID_USERNAME: 'test'
             SENDGRID_PASSWORD: 'test'
             REDIS_URL: 'redis://'
