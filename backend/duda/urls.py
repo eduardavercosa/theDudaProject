@@ -7,8 +7,6 @@ import django_js_reverse.views
 
 
 urlpatterns = [
-    https://dashboard.heroku.com/apps/dudapokebattle
+    path("admin/", admin.site.urls, name="admin"),
+    path("jsreverse/", django_js_reverse.views.urls_js, name="js_reverse"),
 ]
-
-'''path("admin/", admin.site.urls, name="admin"),
-    path("jsreverse/", django_js_reverse.views.urls_js, name="js_reverse"),'''
