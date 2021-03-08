@@ -22,7 +22,7 @@ ADMINS = (("Admin", "eduardavercosa@vinta.com.br"),)
 
 AUTH_USER_MODEL = "users.User"
 
-ALLOWED_HOSTS = ['.dudapokebattle.herokuapp.com']
+ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     "django.contrib.admin",
