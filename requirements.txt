@@ -32,7 +32,7 @@ click>=7.1.2
     #   click-repl
 decorator>=4.4.2
     # via ipython
-defusedxml>=0.7.0
+defusedxml>=0.7.1
     # via odfpy
 diff-match-patch>=20200713
     # via django-import-export
@@ -63,8 +63,6 @@ ipython-genutils>=0.2.0
     # via traitlets
 ipython>=7.21.0
     # via -r requirements.in
-jdcal>=1.4.1
-    # via openpyxl
 jedi>=0.18.0
     # via ipython
 kombu>=5.0.2
@@ -73,7 +71,7 @@ markuppy>=1.14
     # via tablib
 odfpy>=1.4.1
     # via tablib
-openpyxl>=3.0.6
+openpyxl>=3.0.7
     # via tablib
 parso>=0.8.1
     # via jedi
@@ -93,7 +91,7 @@ ptyprocess>=0.7.0
     # via pexpect
 pycparser>=2.20
     # via cffi
-pygments>=2.8.0
+pygments>=2.8.1
     # via ipython
 python-decouple>=3.4
     # via -r requirements.in
