@@ -2,7 +2,7 @@ version: 2
 
 jobs:
   build:
-    working_directory: ~/duda
+    working_directory: ~/theDudaProject
     docker:
       - image: circleci/python:3.7-stretch-node-browsers # remeber to update those!
     steps:
