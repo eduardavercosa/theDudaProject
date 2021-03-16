@@ -3,7 +3,8 @@
   "description": "Duda Heroku app.",
   "env": {
     "ALLOWED_HOSTS": {
-      "description": "Django ALLOWED_HOSTS setting, e.g.: dudapokebattle.herokuapp.com"
+      "description": "Django ALLOWED_HOSTS setting, e.g.: dudapokebattle.herokuapp.com",
+      "description": "127.0.0.1"
     },
     "DISABLE_COLLECTSTATIC": {
       "description": "Disables Heroku collectstatic",

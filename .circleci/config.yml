@@ -75,7 +75,7 @@ jobs:
             DJANGO_SETTINGS_MODULE: 'duda.settings.production'
             SECRET_KEY: "$(python -c 'import uuid; print(uuid.uuid4().hex + uuid.uuid4().hex)')"
             DATABASE_URL: 'sqlite:///'
-            ALLOWED_HOSTS: '.dudapokebattle.herokuapp.com'
+            ALLOWED_HOSTS: '.dudapokebattle.herokuapp.com'. '127.0.0.1'
             SENDGRID_USERNAME: 'test'
             SENDGRID_PASSWORD: 'test'
             REDIS_URL: 'redis://'
