@@ -36,6 +36,10 @@ INSTALLED_APPS = [
     "import_export",
     "common",
     "users",
+    "battling",
+    "pokemons",
+    "rest_framework",
+
 ]
 
 MIDDLEWARE = [
