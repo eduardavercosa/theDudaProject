@@ -1,12 +1,5 @@
 from django import forms
-
 from .models import Battle
-
-class BattleForm(forms.ModelForm):
-
-    class Meta:
-        model = Battle
-        fields = ('player1', 'player2', 'pk11', 'pk21', 'pk31')
 
 class RoundForm(forms.ModelForm):
 
