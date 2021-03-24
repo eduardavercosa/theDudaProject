@@ -39,7 +39,7 @@ def opponent(request):
     return render(request, 'battling/opponent.html')
 
 def round_new2(request):
-    battleInfo = Battle.objects.get(id=8)
+    battleInfo = Battle.objects.get(id=9)
     if request.method == "POST":
         formRound2 = RoundForm2(request.POST, instance=battleInfo)
         if formRound2.is_valid():

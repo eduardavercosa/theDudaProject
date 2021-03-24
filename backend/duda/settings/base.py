@@ -21,6 +21,9 @@ DEBUG = True
 ADMINS = (("Admin", "eduardavercosa@vinta.com.br"),)
 
 AUTH_USER_MODEL = "users.User"
+STATUS_MODEL = "sequence.Status"
+
+POKE_API_URL = "https://pokeapi.co/api/v2/pokemon/"
 
 ALLOWED_HOSTS = [".dudapokebattle.herokuapp.com", "127.0.0.1"]
 
