@@ -19,6 +19,7 @@ def get_pokemon_from_api(poke_name):
     response = requests.get(url)
     data = response.json()
     info = {
+        "poke_id": data["id"],
         "defense": data["stats"][3]["base_stat"],
         "attack": data["stats"][4]["base_stat"],
         "hp": data["stats"][5]["base_stat"],
@@ -46,7 +47,6 @@ def battle_new(request):
                 battle.save()
                 return redirect('invite')
             if (sumAll > 600):
-                print("erro")
                 message = "ERROR: The PKNs you selected sum more than 600 points, please choose again"
                 return render(request, 'battling/battle_new.html', {'form': form, 'message': message})
     else:
@@ -60,7 +60,7 @@ def opponent(request):
     return render(request, 'battling/opponent.html')
 
 def round_new2(request):
-    battleInfo = Battle.objects.get(id=57)
+    battleInfo = Battle.objects.get(id=64)
     if request.method == "POST":
         formRound2 = RoundForm2(request.POST, instance=battleInfo)
         if formRound2.is_valid():
@@ -81,5 +81,3 @@ def round_new2(request):
     else:
         formRound2 = RoundForm2()
     return render(request, 'battling/round_new2.html', {'formRound2': formRound2, 'battle':battleInfo})
-
-
