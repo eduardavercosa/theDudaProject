@@ -6,6 +6,7 @@ from .forms import RoundForm, RoundForm2
 from urllib.parse import urljoin
 from django.conf import settings
 import requests
+from .battles.battle import round
 
 
 
@@ -82,8 +83,13 @@ def round_new2(request):
         formRound2 = RoundForm2()
     return render(request, 'battling/round_new2.html', {'formRound2': formRound2, 'battle':battleInfo})
 
-for i in range(3):
-    pokemon_1 = team1[i]
-    pokemon_2 = team2[i]
+def batalha(request):
+    battle_info = Battle.objects.filter(id=70).values()[0]
+    winner = {'player1': 0, 'player2': 0}
+    pokemon_c_atk = get_pokemon_from_api(battle_info['pk11'])["attack"]
+    pokemon_o_def = get_pokemon_from_api(battle_info['pk22'])["defense"]
 
-    winner(pokemon_1, pokemon_2)
+    winner = round(pokemon_c_atk, pokemon_o_def, winner)
+
+
+    return render(request, 'battling/batalha.html', { 'winner' : winner, 'pokemon_c_atk': pokemon_c_atk, 'pokemon_o_def': pokemon_o_def})
