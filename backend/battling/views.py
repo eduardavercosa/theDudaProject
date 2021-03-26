@@ -37,12 +37,12 @@ def battle_new(request):
         if form.is_valid():
             battle = form.save(commit=False)
             dataPK11 = get_pokemon_from_api(battle.pk11)
-            dataPK21 = get_pokemon_from_api(battle.pk21)
-            dataPK31 = get_pokemon_from_api(battle.pk31)
+            dataPK12 = get_pokemon_from_api(battle.pk12)
+            dataPK13 = get_pokemon_from_api(battle.pk13)
             sumPK11 = sumValid(dataPK11)
-            sumPK21 = sumValid(dataPK21)
-            sumPK31 = sumValid(dataPK31)
-            sumAll = sumPK11 + sumPK21 + sumPK31
+            sumPK12 = sumValid(dataPK12)
+            sumPK13 = sumValid(dataPK13)
+            sumAll = sumPK11 + sumPK12 + sumPK13
             if (sumAll <= 600):
                 battle.save()
                 return redirect('invite')
@@ -60,18 +60,18 @@ def opponent(request):
     return render(request, 'battling/opponent.html')
 
 def round_new2(request):
-    battleInfo = Battle.objects.get(id=64)
+    battleInfo = Battle.objects.get(id=72)
     if request.method == "POST":
         formRound2 = RoundForm2(request.POST, instance=battleInfo)
         if formRound2.is_valid():
             teste = formRound2.save(commit=False)
-            dataPK12 = get_pokemon_from_api(teste.pk12)
+            dataPK21 = get_pokemon_from_api(teste.pk21)
             dataPK22 = get_pokemon_from_api(teste.pk22)
-            dataPK32 = get_pokemon_from_api(teste.pk32)
-            sumPK12 = sumValid(dataPK12)
+            dataPK23 = get_pokemon_from_api(teste.pk23)
+            sumPK21 = sumValid(dataPK21)
             sumPK22 = sumValid(dataPK22)
-            sumPK32 = sumValid(dataPK32)
-            sumAll = sumPK12 + sumPK22 + sumPK32
+            sumPK23 = sumValid(dataPK23)
+            sumAll = sumPK21 + sumPK22 + sumPK23
             if (sumAll <= 600):
                 formRound2.save()
                 return redirect('home')
@@ -81,3 +81,9 @@ def round_new2(request):
     else:
         formRound2 = RoundForm2()
     return render(request, 'battling/round_new2.html', {'formRound2': formRound2, 'battle':battleInfo})
+
+for i in range(3):
+    pokemon_1 = team1[i]
+    pokemon_2 = team2[i]
+
+    winner(pokemon_1, pokemon_2)

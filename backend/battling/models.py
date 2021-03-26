@@ -23,11 +23,11 @@ class Battle(models.Model):
     player1 = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='+', verbose_name='You are:',  null=True)
     player2 = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='+', verbose_name='Opponent:',  null=True)
     pk11 = models.CharField(max_length=200, verbose_name='Pokemon 1:', null=True)
-    pk21 = models.CharField(max_length=200, verbose_name='Pokemon 2:', null=True)
-    pk31 = models.CharField(max_length=200, verbose_name='Pokemon 3:', null=True)
-    pk12 = models.CharField(max_length=200, verbose_name='Pokemon 1:', null=True)
+    pk12 = models.CharField(max_length=200, verbose_name='Pokemon 2:', null=True)
+    pk13 = models.CharField(max_length=200, verbose_name='Pokemon 3:', null=True)
+    pk21 = models.CharField(max_length=200, verbose_name='Pokemon 1:', null=True)
     pk22 = models.CharField(max_length=200, verbose_name='Pokemon 2:', null=True)
-    pk32 = models.CharField(max_length=200, verbose_name='Pokemon 3:', null=True)
+    pk23 = models.CharField(max_length=200, verbose_name='Pokemon 3:', null=True)
     def publish(self):
         self.save()
 

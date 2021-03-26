@@ -5,11 +5,11 @@ class RoundForm(forms.ModelForm):
 
     class Meta:
         model = Battle
-        fields = ('player1', 'player2','pk11', 'pk21', 'pk31')
+        fields = ('player1', 'player2','pk11', 'pk12', 'pk13')
 
 
 class RoundForm2(forms.ModelForm):
 
     class Meta:
         model = Battle
-        fields = ('pk12', 'pk22', 'pk32')
+        fields = ('pk21', 'pk22', 'pk23')
