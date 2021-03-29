@@ -9,6 +9,7 @@ django-model-utils==4.1.1
 django-naomi==0.8
 django-render-block==0.8.1
 django-templated-email==2.3.0
+django-webpack-loader==0.7.0
 djangorestframework==3.12.2
 idna==2.10
 psycopg2==2.8.6
