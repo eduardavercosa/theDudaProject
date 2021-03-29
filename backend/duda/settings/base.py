@@ -120,3 +120,5 @@ COMMIT_SHA = config("HEROKU_SLUG_COMMIT", default="")
 
 # Django Templated E-mail
 TEMPLATED_EMAIL_BACKEND = 'templated_email.backends.vanilla_django.TemplateBackend'
+
+SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL')
