@@ -1,11 +1,11 @@
-def round (pokemon_c_atk, pokemon_o_def, winner):
+def round (pokemon_c_atk, pokemon_c_def, pokemon_c_hp, pokemon_o_atk, pokemon_o_def, pokemon_o_hp, points):
     if pokemon_c_atk > pokemon_o_def:
-        winner['player1'] +=1
+        points['player1'] +=1
     elif pokemon_c_atk < pokemon_o_def:
-        winner['player2'] +=1
+        points['player2'] +=1
     else:
         if pokemon_c_hp > pokemon_o_hp:
-            winner['player1'] +=1
+            points['player1'] +=1
         else:
-            winner['player2'] +=1
-    return winner
+            points['player2'] +=1
+    return points

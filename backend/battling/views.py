@@ -21,6 +21,7 @@ def get_pokemon_from_api(poke_name):
     data = response.json()
     info = {
         "poke_id": data["id"],
+        "name": data["name"],
         "defense": data["stats"][3]["base_stat"],
         "attack": data["stats"][4]["base_stat"],
         "hp": data["stats"][5]["base_stat"],
@@ -84,12 +85,26 @@ def round_new2(request):
     return render(request, 'battling/round_new2.html', {'formRound2': formRound2, 'battle':battleInfo})
 
 def batalha(request):
-    battle_info = Battle.objects.filter(id=70).values()[0]
-    winner = {'player1': 0, 'player2': 0}
-    pokemon_c_atk = get_pokemon_from_api(battle_info['pk11'])["attack"]
-    pokemon_o_def = get_pokemon_from_api(battle_info['pk22'])["defense"]
+    team1 = []
+    team2 = []
+    battle_info = Battle.objects.filter(id=65).values()[0]
+    points = {'player1': 0, 'player2': 0}
+    for i in range(1,4):
+        team1.append(get_pokemon_from_api(battle_info['pk1'+str(i)])["name"])
+        pokemon_c_atk = get_pokemon_from_api(battle_info['pk1'+str(i)])["attack"]
+        pokemon_c_def = get_pokemon_from_api(battle_info['pk1'+str(i)])["defense"]
+        pokemon_c_hp = get_pokemon_from_api(battle_info['pk1'+str(i)])["hp"]
 
-    winner = round(pokemon_c_atk, pokemon_o_def, winner)
+        team2.append(get_pokemon_from_api(battle_info['pk2'+str(i)])["name"])
+        pokemon_o_atk = get_pokemon_from_api(battle_info['pk2'+str(i)])["attack"]
+        pokemon_o_def = get_pokemon_from_api(battle_info['pk2'+str(i)])["defense"]
+        pokemon_o_hp = get_pokemon_from_api(battle_info['pk2'+str(i)])["hp"]
 
+        points = round(pokemon_c_atk, pokemon_c_def, pokemon_c_hp, pokemon_o_atk, pokemon_o_def, pokemon_o_hp, points)
 
-    return render(request, 'battling/batalha.html', { 'winner' : winner, 'pokemon_c_atk': pokemon_c_atk, 'pokemon_o_def': pokemon_o_def})
+    if points['player1'] > points['player2']:
+        winner = "Player1 won!"
+    else:
+        winner = "Player2 won!"
+
+    return render(request, 'battling/batalha.html', { 'team1': team1, 'team2': team2, 'winner' : winner})

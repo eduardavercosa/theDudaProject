@@ -1,0 +1,75 @@
+{% block subject %}PokeBattle: Battle result!{% endblock %}
+{% block html %}
+  <h3>Hello, players!</h3>
+
+  <p><b>{{battle_creator}}</b> challenged <b>{{battle_opponent}}</b> on <b>Battle #{{battle_id}}</b> and now we have the results!</p>
+
+  <p>
+    <div style="border: 1px solid #000; padding: 10px;">
+      <div>{{battle_creator}}'s team was:</div>
+      <table style="margin: auto;">
+        <tr>
+          <td style="padding: 0 6px; width: fit-content;">
+            <div style="display: block;">
+              <div style="display: flex; justify-content: center;">
+                <img src="{{creator_team.pokemon_1.img_url}}" height="90px"></img>
+              </div>
+              <div style="text-align: center;">{{creator_team.pokemon_1.name}}</div>
+            </div>
+          </td>
+          <td style="padding: 0 6px; width: fit-content;">
+            <div style="display: block;">
+              <div style="display: flex; justify-content: center;">
+                <img src="{{creator_team.pokemon_2.img_url}}" height="90px"></img>
+              </div>
+              <div style="text-align: center;">{{creator_team.pokemon_2.name}}</div>
+            </div>
+          </td>
+          <td style="padding: 0 6px; width: fit-content;">
+            <div style="display: block;">
+              <div style="display: flex; justify-content: center;">
+                <img src="{{creator_team.pokemon_3.img_url}}" height="90px"></img>
+              </div>
+              <div style="text-align: center;">{{creator_team.pokemon_3.name}}</div>
+            </div>
+          </td>
+        </tr>
+      </table>
+    </div>
+    <div style="border: 1px solid #000; padding: 10px; margin-top: 7px;">
+      <div>{{battle_opponent}}'s team was:</div>
+      <table style="margin: auto;">
+        <tr>
+          <td style="padding: 0 6px; width: fit-content;">
+            <div style="display: block;">
+              <div style="display: flex; justify-content: center;">
+                <img src="{{opponent_team.pokemon_1.img_url}}" height="90px"></img>
+              </div>
+              <div style="text-align: center;">{{opponent_team.pokemon_1.name}}</div>
+            </div>
+          </td>
+          <td style="padding: 0 6px; width: fit-content;">
+            <div style="display: block;">
+              <div style="display: flex; justify-content: center;">
+                <img src="{{opponent_team.pokemon_2.img_url}}" height="90px"></img>
+              </div>
+              <div style="text-align: center;">{{opponent_team.pokemon_2.name}}</div>
+            </div>
+          </td>
+          <td style="padding: 0 6px; width: fit-content;">
+            <div style="display: block;">
+              <div style="display: flex; justify-content: center;">
+                <img src="{{opponent_team.pokemon_3.img_url}}" height="90px"></img>
+              </div>
+              <div style="text-align: center;">{{opponent_team.pokemon_3.name}}</div>
+            </div>
+          </td>
+        </tr>
+      </table>
+    </div>
+  </p>
+
+  <p style="font-size: 18px;">And the winner is... <b>{{battle_winner}}</b>!!!</p>
+
+  <p>You can see more details about this battle <a href="{{battle_details_url}}">here.</a></p>
+{% endblock %}
