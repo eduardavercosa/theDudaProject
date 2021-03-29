@@ -4,6 +4,7 @@ chardet==4.0.0
 dj-database-url==0.5.0
 Django==3.1.7
 django-js-reverse==0.9.1
+django-log-request-id==1.6.0
 django-model-utils==4.1.1
 django-naomi==0.8
 django-render-block==0.8.1
