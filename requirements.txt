@@ -1,6 +1,7 @@
 asgiref==3.3.1
 certifi==2020.12.5
 chardet==4.0.0
+dj-database-url==0.5.0
 Django==3.1.7
 django-js-reverse==0.9.1
 django-model-utils==4.1.1
@@ -10,6 +11,7 @@ django-templated-email==2.3.0
 djangorestframework==3.12.2
 idna==2.10
 psycopg2==2.8.6
+pycodestyle==2.7.0
 python-decouple==3.4
 pytz==2021.1
 requests==2.25.1
