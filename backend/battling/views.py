@@ -9,8 +9,6 @@ import requests
 from .battles.battle import round
 
 
-
-# Create your views here.
 def home(request):
     gamer = Battle.objects.all()
     return render(request, 'battling/home.html', { 'gamer' : gamer})
@@ -84,7 +82,8 @@ def round_new2(request):
         formRound2 = RoundForm2()
     return render(request, 'battling/round_new2.html', {'formRound2': formRound2, 'battle':battleInfo})
 
-def batalha(request):
+'''
+def fights(request):
     team1 = []
     team2 = []
     battle_info = Battle.objects.filter(id=78).values()[0]
@@ -107,4 +106,5 @@ def batalha(request):
     else:
         winner = "Player2 won!"
 
-    return render(request, 'battling/batalha.html', { 'team1': team1, 'team2': team2, 'winner' : winner})
+    return render(request, 'battling/fights.html', { 'team1': team1, 'team2': team2, 'winner' : winner})
+'''
