@@ -17,9 +17,13 @@ brotlipy==0.7.0
 celery[redis]==5.0.5
     # via -r requirements.in
 certifi==2020.12.5
-    # via sentry-sdk
+    # via
+    #   requests
+    #   sentry-sdk
 cffi==1.14.5
     # via brotlipy
+chardet==4.0.0
+    # via requests
 click-didyoumean==0.0.3
     # via celery
 click-plugins==1.1.1
@@ -64,6 +68,8 @@ et-xmlfile==1.0.1
     # via openpyxl
 gunicorn==20.1.0
     # via -r requirements.in
+idna==2.10
+    # via requests
 ipython-genutils==0.2.0
     # via traitlets
 ipython==7.22.0
@@ -108,6 +114,8 @@ pyyaml==5.4.1
     # via tablib
 redis==3.5.3
     # via celery
+requests==2.25.1
+    # via -r requirements.in
 sentry-sdk==1.0.0
     # via -r requirements.in
 six==1.15.0
@@ -119,7 +127,9 @@ tablib[html,ods,xls,xlsx,yaml]==3.0.0
 traitlets==5.0.5
     # via ipython
 urllib3==1.26.4
-    # via sentry-sdk
+    # via
+    #   requests
+    #   sentry-sdk
 vine==5.0.0
     # via
     #   amqp
