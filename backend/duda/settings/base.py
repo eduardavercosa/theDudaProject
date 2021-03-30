@@ -28,6 +28,7 @@ POKE_API_URL = "https://pokeapi.co/api/v2/pokemon/"
 ALLOWED_HOSTS = [".dudapokebattle.herokuapp.com", "127.0.0.1"]
 
 INSTALLED_APPS = [
+    "rest_framework",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -41,7 +42,6 @@ INSTALLED_APPS = [
     "users",
     "battling",
     "pokemons",
-    "rest_framework",
 
 ]
 
