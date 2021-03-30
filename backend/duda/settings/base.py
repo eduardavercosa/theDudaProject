@@ -28,7 +28,6 @@ POKE_API_URL = "https://pokeapi.co/api/v2/pokemon/"
 ALLOWED_HOSTS = [".dudapokebattle.herokuapp.com", "127.0.0.1"]
 
 INSTALLED_APPS = [
-    "rest_framework",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -36,6 +35,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "django_js_reverse",
+    "rest_framework",
     "webpack_loader",
     "import_export",
     "common",
