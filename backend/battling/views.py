@@ -82,7 +82,6 @@ def round_new2(request):
         formRound2 = RoundForm2()
     return render(request, 'battling/round_new2.html', {'formRound2': formRound2, 'battle':battleInfo})
 
-'''
 def fights(request):
     team1 = []
     team2 = []
@@ -107,4 +106,3 @@ def fights(request):
         winner = "Player2 won!"
 
     return render(request, 'battling/fights.html', { 'team1': team1, 'team2': team2, 'winner' : winner})
-'''
