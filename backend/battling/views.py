@@ -60,7 +60,7 @@ def opponent(request):
     return render(request, 'battling/opponent.html')
 
 def round_new2(request):
-    battleInfo = Battle.objects.get(id=78)
+    battleInfo = Battle.objects.latest('id')
     if request.method == "POST":
         formRound2 = RoundForm2(request.POST, instance=battleInfo)
         if formRound2.is_valid():
@@ -85,7 +85,8 @@ def round_new2(request):
 def fights(request):
     team1 = []
     team2 = []
-    battle_info = Battle.objects.filter(id=78).values()[0]
+    battleInfo = Battle.objects.latest('id')
+    battle_info = Battle.objects.filter(id=battleInfo.id).values()[0]
     points = {'player1': 0, 'player2': 0}
     for i in range(1,4):
         team1.append(get_pokemon_from_api(battle_info['pk1'+str(i)])["name"])
