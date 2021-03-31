@@ -45,7 +45,7 @@ pydocstyle==6.0.0
 pyflakes==2.2.0
 pylint==2.5.3
 pylint-celery==0.3
-pylint-django==2.1.0
+pylint-django==2.4.2
 pylint-flask==0.6
 pylint-plugin-utils==0.6
 python-decouple==3.4
