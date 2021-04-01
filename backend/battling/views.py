@@ -1,17 +1,16 @@
 from django.shortcuts import render
 from django.shortcuts import redirect
-from users.models import User
 from .models import Battle
 from .forms import RoundForm, RoundForm2
+import requests
 from urllib.parse import urljoin
 from django.conf import settings
-import requests
-#from .battles.battle import round
 
 
 def home(request):
     gamer = Battle.objects.all()
-    return render(request, 'battling/home.html', { 'gamer' : gamer})
+    return render(request, 'battling/home.html', {'gamer': gamer})
+
 
 def get_pokemon_from_api(poke_name):
     url = urljoin(settings.POKE_API_URL, poke_name.lower())
@@ -28,57 +27,60 @@ def get_pokemon_from_api(poke_name):
 
 
 def sumValid(pokemon):
-    sumResult = pokemon["attack"] +  pokemon["defense"] + pokemon["hp"]
-    return sumResult
+    sum_result = pokemon["attack"] + pokemon["defense"] + pokemon["hp"]
+    return sum_result
+
 
 def battle_new(request):
     if request.method == "POST":
         form = RoundForm(request.POST)
         if form.is_valid():
             battle = form.save(commit=False)
-            dataPK11 = get_pokemon_from_api(battle.pk11)
-            dataPK12 = get_pokemon_from_api(battle.pk12)
-            dataPK13 = get_pokemon_from_api(battle.pk13)
-            sumPK11 = sumValid(dataPK11)
-            sumPK12 = sumValid(dataPK12)
-            sumPK13 = sumValid(dataPK13)
-            sumAll = sumPK11 + sumPK12 + sumPK13
-            if (sumAll <= 600):
+            data_pk11 = get_pokemon_from_api(battle.pk11)
+            data_pk12 = get_pokemon_from_api(battle.pk12)
+            data_pk13 = get_pokemon_from_api(battle.pk13)
+            sum_pk11 = sumValid(data_pk11)
+            sum_pk12 = sumValid(data_pk12)
+            sum_pk13 = sumValid(data_pk13)
+            sum_all = sum_pk11 + sum_pk12 + sum_pk13
+            if sum_all <= 600:
                 battle.save()
                 return redirect('invite')
-            if (sumAll > 600):
+            if sum_all > 600:
                 message = "ERROR: The PKNs you selected sum more than 600 points, please choose again"
                 return render(request, 'battling/battle_new.html', {'form': form, 'message': message})
     else:
         form = RoundForm()
     return render(request, 'battling/battle_new.html', {'form': form})
 
+
 def invite(request):
     return render(request, 'battling/invite.html')
+
 
 def opponent(request):
     return render(request, 'battling/opponent.html')
 
-def round_new2(request):
-    battleInfo = Battle.objects.latest('id')
-    if request.method == "POST":
-        formRound2 = RoundForm2(request.POST, instance=battleInfo)
-        if formRound2.is_valid():
-            teste = formRound2.save(commit=False)
-            dataPK21 = get_pokemon_from_api(teste.pk21)
-            dataPK22 = get_pokemon_from_api(teste.pk22)
-            dataPK23 = get_pokemon_from_api(teste.pk23)
-            sumPK21 = sumValid(dataPK21)
-            sumPK22 = sumValid(dataPK22)
-            sumPK23 = sumValid(dataPK23)
-            sumAll = sumPK21 + sumPK22 + sumPK23
-            if (sumAll <= 600):
-                formRound2.save()
-                return redirect('home')
-            if (sumAll > 600):
-                message = "ERROR: The PKNs you selected sum more than 600 points, please choose again"
-                return render(request, 'battling/round_new2.html', {'formRound2': formRound2, 'battle':battleInfo, 'message': message})
-    else:
-        formRound2 = RoundForm2()
-    return render(request, 'battling/round_new2.html', {'formRound2': formRound2, 'battle':battleInfo})
 
+def round_new2(request):
+    battle_Info = Battle.objects.latest('id')
+    if request.method == "POST":
+        form_round2 = RoundForm2(request.POST, instance=battle_Info)
+        if form_round2.is_valid():
+            teste = form_round2.save(commit=False)
+            data_pk21 = get_pokemon_from_api(teste.pk21)
+            data_pk22 = get_pokemon_from_api(teste.pk22)
+            data_pk23 = get_pokemon_from_api(teste.pk23)
+            sum_pk21 = sumValid(data_pk21)
+            sum_pk22 = sumValid(data_pk22)
+            sum_pk23 = sumValid(data_pk23)
+            sum_all = sum_pk21 + sum_pk22 + sum_pk23
+            if sum_all <= 600:
+                form_round2.save()
+                return redirect('home')
+            if sum_all > 600:
+                message = "ERROR: The PKNs you selected sum more than 600 points, please choose again"
+                return render(request, 'battling/round_new2.html', {'form_round2': form_round2, 'battle': battle_Info, 'message': message})
+    else:
+        form_round2 = RoundForm2()
+    return render(request, 'battling/round_new2.html', {'form_round2': form_round2, 'battle': battle_Info})
