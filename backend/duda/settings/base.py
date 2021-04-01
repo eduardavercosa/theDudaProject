@@ -41,8 +41,6 @@ INSTALLED_APPS = [
     "common",
     "users",
     "battling",
-    "pokemons",
-
 ]
 
 MIDDLEWARE = [
