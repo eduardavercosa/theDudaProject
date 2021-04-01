@@ -14,7 +14,7 @@ def home(request):
     return render(request, 'battling/home.html', { 'gamer' : gamer})
 
 def get_pokemon_from_api(poke_name):
-    url = urljoin(settings.POKE_API_URL, poke_name)
+    url = urljoin(settings.POKE_API_URL, poke_name.lower())
     response = requests.get(url)
     data = response.json()
     info = {
