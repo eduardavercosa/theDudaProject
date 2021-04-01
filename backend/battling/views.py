@@ -1,9 +1,9 @@
 from django.shortcuts import render
 from django.shortcuts import redirect
+from urllib.parse import urljoin
+import requests
 from .models import Battle
 from .forms import RoundForm, RoundForm2
-import requests
-from urllib.parse import urljoin
 from django.conf import settings
 
 
@@ -63,9 +63,9 @@ def opponent(request):
 
 
 def round_new2(request):
-    battle_Info = Battle.objects.latest('id')
-    if request.method == "POST":
-        form_round2 = RoundForm2(request.POST, instance=battle_Info)
+    battle_info = Battle.objects.latest('id')
+    if request.method == "POST"
+        form_round2 = RoundForm2(request.POST, instance=battle_info)
         if form_round2.is_valid():
             teste = form_round2.save(commit=False)
             data_pk21 = get_pokemon_from_api(teste.pk21)
@@ -80,7 +80,7 @@ def round_new2(request):
                 return redirect('home')
             if sum_all > 600:
                 message = "ERROR: The PKNs you selected sum more than 600 points, please choose again"
-                return render(request, 'battling/round_new2.html', {'form_round2': form_round2, 'battle': battle_Info, 'message': message})
+                return render(request, 'battling/round_new2.html', {'form_round2': form_round2, 'battle': battle_info, 'message': message})
     else:
         form_round2 = RoundForm2()
-    return render(request, 'battling/round_new2.html', {'form_round2': form_round2, 'battle': battle_Info})
+    return render(request, 'battling/round_new2.html', {'form_round2': form_round2, 'battle': battle_info})
