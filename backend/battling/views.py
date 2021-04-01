@@ -49,9 +49,9 @@ def battle_new(request):
             if sum_all > 600:
                 message = "ERROR: The PKNs sum more than 600 pts. Please choose again"
                 return render(request,
-                            'battling/battle_new.html',
-                            {'form': form,
-                            'message': message})
+                                'battling/battle_new.html',
+                                {'form': form,
+                                'message': message})
     else:
         form = RoundForm()
     return render(request, 'battling/battle_new.html', {'form': form})
@@ -84,13 +84,13 @@ def round_new2(request):
             if sum_all > 600:
                 message = "ERROR: The PKNs sum more than 600 pts. Please choose again"
                 return render(request,
-                            'battling/round_new2.html',
-                            {'form_round2': form_round2,
-                            'battle': battle_info,
-                            'message': message})
+                                'battling/round_new2.html',
+                                {'form_round2': form_round2,
+                                'battle': battle_info,
+                                'message': message})
     else:
         form_round2 = RoundForm2()
     return render(request,
-                'battling/round_new2.html',
-                {'form_round2': form_round2,
-                'battle': battle_info})
+                    'battling/round_new2.html',
+                    {'form_round2': form_round2,
+                    'battle': battle_info})
