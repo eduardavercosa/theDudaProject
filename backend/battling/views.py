@@ -64,7 +64,7 @@ def opponent(request):
 
 def round_new2(request):
     battle_info = Battle.objects.latest('id')
-    if request.method == "POST"
+    if request.method == "POST":
         form_round2 = RoundForm2(request.POST, instance=battle_info)
         if form_round2.is_valid():
             teste = form_round2.save(commit=False)
