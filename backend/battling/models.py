@@ -21,9 +21,9 @@ class Battle(models.Model):
 
     id = models.AutoField(primary_key=True)
     player1 = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE,
-        related_name='+', verbose_name='You are:', null=True)
+                                related_name='+', verbose_name='You are:', null=True)
     player2 = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE,
-        related_name='+', verbose_name='Opponent:', null=True)
+                                related_name='+', verbose_name='Opponent:', null=True)
     pk11 = models.CharField(max_length=200, verbose_name='Pokemon 1:', null=True)
     pk12 = models.CharField(max_length=200, verbose_name='Pokemon 2:', null=True)
     pk13 = models.CharField(max_length=200, verbose_name='Pokemon 3:', null=True)
