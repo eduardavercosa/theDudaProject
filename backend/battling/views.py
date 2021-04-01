@@ -6,7 +6,7 @@ from .forms import RoundForm, RoundForm2
 from urllib.parse import urljoin
 from django.conf import settings
 import requests
-from .battles.battle import round
+#from .battles.battle import round
 
 
 def home(request):
