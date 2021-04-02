@@ -5,6 +5,7 @@ import requests
 from .models import Battle
 from .forms import RoundForm, RoundForm2
 from django.conf import settings
+from .battles.battle import round
 
 
 def home(request):
@@ -88,3 +89,29 @@ def round_new2(request):
         form_round2 = RoundForm2()
     return render(request, 'battling/round_new2.html', {'form_round2': form_round2,
                                                         'battle': battle_info})
+
+def fights(request):
+    team1 = []
+    team2 = []
+    id_info = Battle.objects.latest('id')
+    battle_info = Battle.objects.filter(id=id_info.id).values()[0]
+    points = {'player1': 0, 'player2': 0}
+    for i in range(1,4):
+        team1.append(get_pokemon_from_api(battle_info['pk1'+str(i)])["name"])
+        pokemon_c_atk = get_pokemon_from_api(battle_info['pk1'+str(i)])["attack"]
+        pokemon_c_def = get_pokemon_from_api(battle_info['pk1'+str(i)])["defense"]
+        pokemon_c_hp = get_pokemon_from_api(battle_info['pk1'+str(i)])["hp"]
+
+        team2.append(get_pokemon_from_api(battle_info['pk2'+str(i)])["name"])
+        pokemon_o_atk = get_pokemon_from_api(battle_info['pk2'+str(i)])["attack"]
+        pokemon_o_def = get_pokemon_from_api(battle_info['pk2'+str(i)])["defense"]
+        pokemon_o_hp = get_pokemon_from_api(battle_info['pk2'+str(i)])["hp"]
+
+        points = round(pokemon_c_atk, pokemon_c_def, pokemon_c_hp, pokemon_o_atk, pokemon_o_def, pokemon_o_hp, points)
+
+    if points['player1'] > points['player2']:
+        winner = "Creator won!"
+    else:
+        winner = "Opponent won!"
+
+    return render(request, 'battling/fights.html', { 'team1': team1, 'team2': team2, 'winner' : winner})
