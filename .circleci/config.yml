@@ -79,16 +79,16 @@ jobs:
             SENDGRID_USERNAME: 'test'
             SENDGRID_PASSWORD: 'test'
             REDIS_URL: 'redis://'
-      - run:
-          command: (cd backend; coverage run manage.py test)
-      # - run:
-      #     command: npm run test
-#   - run: - TODO: UNCOMMENT IT LATER (only works if tests exist)
-#          command: |
-#            mkdir -p test-reports/
-#            coverage xml -o test-reports/results.xml
-#          when: always
-      - store_test_results:
-          path: test-reports
-      - store_artifacts:
-          path: test-reports
+  #     - run:
+  #         command: (cd backend; coverage run manage.py test)
+  #     - run:
+  #         command: npm run test
+  # - run: - TODO: UNCOMMENT IT LATER (only works if tests exist)
+  #        command: |
+  #          mkdir -p test-reports/
+  #          coverage xml -o test-reports/results.xml
+  #        when: always
+  #     - store_test_results:
+  #         path: test-reports
+  #     - store_artifacts:
+  #         path: test-reports
