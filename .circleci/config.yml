@@ -55,10 +55,10 @@ jobs:
       # style check
       - run:
           command: prospector --messages-only
-      # security checks
-      # - run:
-      #     command: bandit -r .
-      # imports check
+       security checks
+       - run:
+           command: bandit -r .
+       imports check
       - run:
           command: isort **/*.py --check-only
       - run:

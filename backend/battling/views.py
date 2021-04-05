@@ -1,15 +1,17 @@
-from django.shortcuts import render
-from django.shortcuts import redirect
 from urllib.parse import urljoin
-import requests
-from .models import Battle
-from .forms import RoundForm, RoundForm2
+
 from django.conf import settings
+from django.shortcuts import redirect, render
+
+import requests
+
+from .forms import RoundForm, RoundForm2
+from .models import Battle
 
 
 def home(request):
     gamer = Battle.objects.all()
-    return render(request, 'battling/home.html', {'gamer': gamer})
+    return render(request, "battling/home.html", {"gamer": gamer})
 
 
 def get_pokemon_from_api(poke_name):
@@ -45,26 +47,27 @@ def battle_new(request):
             sum_all = sum_pk11 + sum_pk12 + sum_pk13
             if sum_all <= 600:
                 battle.save()
-                return redirect('invite')
+                return redirect("invite")
             if sum_all > 600:
                 message = "ERROR: The PKNs sum more than 600 pts. Please choose again"
-                return render(request, 'battling/battle_new.html', {'form': form,
-                                                                    'message': message})
+                return render(
+                    request, "battling/battle_new.html", {"form": form, "message": message}
+                )
     else:
         form = RoundForm()
-    return render(request, 'battling/battle_new.html', {'form': form})
+    return render(request, "battling/battle_new.html", {"form": form})
 
 
 def invite(request):
-    return render(request, 'battling/invite.html')
+    return render(request, "battling/invite.html")
 
 
 def opponent(request):
-    return render(request, 'battling/opponent.html')
+    return render(request, "battling/opponent.html")
 
 
 def round_new2(request):
-    battle_info = Battle.objects.latest('id')
+    battle_info = Battle.objects.latest("id")
     if request.method == "POST":
         form_round2 = RoundForm2(request.POST, instance=battle_info)
         if form_round2.is_valid():
@@ -78,13 +81,16 @@ def round_new2(request):
             sum_all = sum_pk21 + sum_pk22 + sum_pk23
             if sum_all <= 600:
                 form_round2.save()
-                return redirect('home')
+                return redirect("home")
             if sum_all > 600:
                 message = "ERROR: The PKNs sum more than 600 pts. Please choose again"
-                return render(request, 'battling/round_new2.html', {'form_round2': form_round2,
-                                                                    'battle': battle_info,
-                                                                    'message': message})
+                return render(
+                    request,
+                    "battling/round_new2.html",
+                    {"form_round2": form_round2, "battle": battle_info, "message": message},
+                )
     else:
         form_round2 = RoundForm2()
-    return render(request, 'battling/round_new2.html', {'form_round2': form_round2,
-                                                        'battle': battle_info})
+    return render(
+        request, "battling/round_new2.html", {"form_round2": form_round2, "battle": battle_info}
+    )
