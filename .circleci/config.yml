@@ -55,10 +55,10 @@ jobs:
       # style check
       - run:
           command: prospector --messages-only
-       security checks
-       - run:
-           command: bandit -r .
-       imports check
+      # security checks
+      # - run:
+      #     command: bandit -r .
+      # imports check
       - run:
           command: isort **/*.py --check-only
       - run:
@@ -83,11 +83,11 @@ jobs:
       #     command: (cd backend; coverage run manage.py test)
       # - run:
       #     command: npm run test
-  # - run: - TODO: UNCOMMENT IT LATER (only works if tests exist)
-  #        command: |
-  #          mkdir -p test-reports/
-  #          coverage xml -o test-reports/results.xml
-  #        when: always
+      # - run:
+      #     command: |
+      #       mkdir -p test-reports/
+      #       coverage xml -o test-reports/results.xml
+      #     when: always
       - store_test_results:
           path: test-reports
       - store_artifacts:
