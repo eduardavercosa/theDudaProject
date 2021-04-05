@@ -1,9 +1,49 @@
 {% extends "battling/base.html" %}
 
 {% block content %}
-  <div class="teste">
-    {{ winner }}
-    {{ team1 }}
-    {{ team2 }}
-  </div>
+<div class="teste">
+  <h1>Resultado</h1>
+  {{winner}} won!
+
+  <h3>Creator</h3>
+  <table>
+    <tr>
+      <th>Pokemon</th>
+      <th>attack</th>
+      <th>defense</th>
+      <th>hp</th>
+    </tr>
+
+    {% for player1_pkm in creator_pkms %}
+    <tr>
+      <th> {{player1_pkm.name}}</th>
+      <th> {{player1_pkm.attack}}</th>
+      <th> {{player1_pkm.defense}}</th>
+      <th> {{player1_pkm.hp}}</th>
+    </tr>
+    {% endfor %}
+
+  </table>
+
+  <h3>Opponent</h3>
+  <table>
+    <tr>
+      <th>Pokemon</th>
+      <th>attack</th>
+      <th>defense</th>
+      <th>hp</th>
+    </tr>
+
+    {% for player2_pkm in opponent_pkms %}
+    <tr>
+      <th> {{player2_pkm.name}}</th>
+      <th> {{player2_pkm.attack}}</th>
+      <th> {{player2_pkm.defense}}</th>
+      <th> {{player2_pkm.hp}}</th>
+    </tr>
+    {% endfor %}
+
+  </table>
+
+</div>
 {% endblock %}

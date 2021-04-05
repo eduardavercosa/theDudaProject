@@ -5,6 +5,7 @@ from django.shortcuts import redirect, render
 
 import requests
 
+from .battles.battle import battle
 from .forms import RoundForm, RoundForm2
 from .models import Battle
 
@@ -33,26 +34,30 @@ def sumValid(pokemon):
     return sum_result
 
 
+def check_valid_team(curr_form):
+    pokemon1 = get_pokemon_from_api(curr_form.creator_pokemon_1)
+    pokemon2 = get_pokemon_from_api(curr_form.creator_pokemon_2)
+    pokemon3 = get_pokemon_from_api(curr_form.creator_pokemon_3)
+    pokemon1_points = sumValid(pokemon1)
+    pokemon2_points = sumValid(pokemon2)
+    pokemon3_points = sumValid(pokemon3)
+    sum_pokemons_points = pokemon1_points + pokemon2_points + pokemon3_points
+    if sum_pokemons_points <= 600:
+        return True
+    return False
+
+
 def battle_new(request):
     if request.method == "POST":
         form = RoundForm(request.POST)
         if form.is_valid():
-            battle = form.save(commit=False)
-            data_pk11 = get_pokemon_from_api(battle.pk11)
-            data_pk12 = get_pokemon_from_api(battle.pk12)
-            data_pk13 = get_pokemon_from_api(battle.pk13)
-            sum_pk11 = sumValid(data_pk11)
-            sum_pk12 = sumValid(data_pk12)
-            sum_pk13 = sumValid(data_pk13)
-            sum_all = sum_pk11 + sum_pk12 + sum_pk13
-            if sum_all <= 600:
-                battle.save()
+            round_battle = form.save(commit=False)
+            valid_team = check_valid_team(round_battle)
+            if valid_team:
+                form.save(commit=False).save()
                 return redirect("invite")
-            if sum_all > 600:
-                message = "ERROR: The PKNs sum more than 600 pts. Please choose again"
-                return render(
-                    request, "battling/battle_new.html", {"form": form, "message": message}
-                )
+            message = "ERROR: your PKNs sum more than 600 points"
+            return render(request, "battling/battle_new.html", {"form": form, "message": message})
     else:
         form = RoundForm()
     return render(request, "battling/battle_new.html", {"form": form})
@@ -71,26 +76,41 @@ def round_new2(request):
     if request.method == "POST":
         form_round2 = RoundForm2(request.POST, instance=battle_info)
         if form_round2.is_valid():
-            teste = form_round2.save(commit=False)
-            data_pk21 = get_pokemon_from_api(teste.pk21)
-            data_pk22 = get_pokemon_from_api(teste.pk22)
-            data_pk23 = get_pokemon_from_api(teste.pk23)
-            sum_pk21 = sumValid(data_pk21)
-            sum_pk22 = sumValid(data_pk22)
-            sum_pk23 = sumValid(data_pk23)
-            sum_all = sum_pk21 + sum_pk22 + sum_pk23
-            if sum_all <= 600:
+            round_battle = form_round2.save(commit=False)
+            valid_team = check_valid_team(round_battle)
+            if valid_team:
                 form_round2.save()
                 return redirect("home")
-            if sum_all > 600:
-                message = "ERROR: The PKNs sum more than 600 pts. Please choose again"
-                return render(
-                    request,
-                    "battling/round_new2.html",
-                    {"form_round2": form_round2, "battle": battle_info, "message": message},
-                )
+            message = "ERROR: your PKNs sum more than 600 points"
+            return render(
+                request,
+                "battling/round_new2.html",
+                {"form_round2": form_round2, "battle": battle_info, "message": message},
+            )
     else:
         form_round2 = RoundForm2()
     return render(
         request, "battling/round_new2.html", {"form_round2": form_round2, "battle": battle_info}
+    )
+
+
+def fights(request):
+    battle_id = Battle.objects.latest("id").id
+    battle_info = Battle.objects.filter(id=battle_id).values()[0]
+
+    creator_pkms = [get_pokemon_from_api(battle_info["pk1" + str(i)]) for i in range(1, 4)]
+    opponent_pkms = [get_pokemon_from_api(battle_info["pk2" + str(i)]) for i in range(1, 4)]
+
+    score = battle(creator_pkms, opponent_pkms)
+
+    winner = "Player1" if score["creator"] > score["opponent"] else "Player2"
+
+    return render(
+        request,
+        "battling/fights.html",
+        {
+            "winner": winner,
+            "creator_pkms": creator_pkms,
+            "opponent_pkms": opponent_pkms,
+        },
     )
