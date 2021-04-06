@@ -34,10 +34,23 @@ def sumValid(pokemon):
     return sum_result
 
 
-def check_valid_team(curr_form):
-    pokemon1 = get_pokemon_from_api(curr_form.creator_pokemon_1)
-    pokemon2 = get_pokemon_from_api(curr_form.creator_pokemon_2)
-    pokemon3 = get_pokemon_from_api(curr_form.creator_pokemon_3)
+def check_valid_team1(curr_form):
+    pokemon1 = get_pokemon_from_api(curr_form.pk11)
+    pokemon2 = get_pokemon_from_api(curr_form.pk12)
+    pokemon3 = get_pokemon_from_api(curr_form.pk13)
+    pokemon1_points = sumValid(pokemon1)
+    pokemon2_points = sumValid(pokemon2)
+    pokemon3_points = sumValid(pokemon3)
+    sum_pokemons_points = pokemon1_points + pokemon2_points + pokemon3_points
+    if sum_pokemons_points <= 600:
+        return True
+    return False
+
+
+def check_valid_team2(curr_form):
+    pokemon1 = get_pokemon_from_api(curr_form.pk21)
+    pokemon2 = get_pokemon_from_api(curr_form.pk22)
+    pokemon3 = get_pokemon_from_api(curr_form.pk23)
     pokemon1_points = sumValid(pokemon1)
     pokemon2_points = sumValid(pokemon2)
     pokemon3_points = sumValid(pokemon3)
@@ -52,7 +65,7 @@ def battle_new(request):
         form = RoundForm(request.POST)
         if form.is_valid():
             round_battle = form.save(commit=False)
-            valid_team = check_valid_team(round_battle)
+            valid_team = check_valid_team1(round_battle)
             if valid_team:
                 form.save(commit=False).save()
                 return redirect("invite")
@@ -77,7 +90,7 @@ def round_new2(request):
         form_round2 = RoundForm2(request.POST, instance=battle_info)
         if form_round2.is_valid():
             round_battle = form_round2.save(commit=False)
-            valid_team = check_valid_team(round_battle)
+            valid_team = check_valid_team2(round_battle)
             if valid_team:
                 form_round2.save()
                 return redirect("home")
