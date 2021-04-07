@@ -14,7 +14,6 @@ def send_battle_result(battle, winner, creator_pkms, opponent_pkms):
         from_email="eduardavercosa@vinta.com.br",
         recipient_list=[battle.player1.email, battle.player2.email],
         context={
-            "name": "eduarda",
             "battle_creator": battle.player1.email.split("@")[0],
             "battle_opponent": battle.player2.email.split("@")[0],
             "battle_winner": winner,
