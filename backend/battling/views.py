@@ -6,6 +6,7 @@ from django.shortcuts import redirect, render
 import requests
 
 from .battles.battle import battle
+from .battles.email import send_battle_result
 from .forms import RoundForm, RoundForm2
 from .models import Battle
 
@@ -93,7 +94,7 @@ def round_new2(request):
             valid_team = check_valid_team2(round_battle)
             if valid_team:
                 form_round2.save()
-                return redirect("home")
+                return redirect("battle_end")
             message = "ERROR: your PKNs sum more than 600 points"
             return render(
                 request,
@@ -107,16 +108,37 @@ def round_new2(request):
     )
 
 
-def fights(request):
+def battle_end(request):
     battle_id = Battle.objects.latest("id").id
     battle_info = Battle.objects.filter(id=battle_id).values()[0]
+    id_battle = Battle.objects.get(id=battle_id)
 
     creator_pkms = [get_pokemon_from_api(battle_info["pk1" + str(i)]) for i in range(1, 4)]
     opponent_pkms = [get_pokemon_from_api(battle_info["pk2" + str(i)]) for i in range(1, 4)]
 
     score = battle(creator_pkms, opponent_pkms)
 
-    winner = "Player1" if score["creator"] > score["opponent"] else "Player2"
+    winner = (
+        id_battle.player1.email if score["creator"] > score["opponent"] else id_battle.player2.email
+    )
+    send_battle_result(id_battle, winner, creator_pkms, opponent_pkms)
+
+    return render(request, "battling/battle_end.html")
+
+
+def fights(request):
+    battle_id = Battle.objects.latest("id").id
+    battle_info = Battle.objects.filter(id=battle_id).values()[0]
+    id_battle = Battle.objects.get(id=battle_id)
+
+    creator_pkms = [get_pokemon_from_api(battle_info["pk1" + str(i)]) for i in range(1, 4)]
+    opponent_pkms = [get_pokemon_from_api(battle_info["pk2" + str(i)]) for i in range(1, 4)]
+
+    score = battle(creator_pkms, opponent_pkms)
+
+    winner = (
+        id_battle.player1.email if score["creator"] > score["opponent"] else id_battle.player2.email
+    )
 
     return render(
         request,
