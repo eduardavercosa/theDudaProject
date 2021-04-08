@@ -6,6 +6,7 @@ from django.shortcuts import redirect, render
 import requests
 
 from .battles.battle import battle
+from .battles.email import send_battle_result
 from .forms import RoundForm, RoundForm2
 from .models import Battle
 
@@ -108,20 +109,19 @@ def round_new2(request):
 
 
 def battle_end(request):
-    # battle_id = Battle.objects.latest("id").id
-    # battle_info = Battle.objects.filter(id=battle_id).values()[0]
-    # id_battle = Battle.objects.get(id=battle_id)
+    battle_id = Battle.objects.latest("id").id
+    battle_info = Battle.objects.filter(id=battle_id).values()[0]
+    id_battle = Battle.objects.get(id=battle_id)
 
-    # creator_pkms = [get_pokemon_from_api(battle_info["pk1" + str(i)]) for i in range(1, 4)]
-    # opponent_pkms = [get_pokemon_from_api(battle_info["pk2" + str(i)]) for i in range(1, 4)]
+    creator_pkms = [get_pokemon_from_api(battle_info["pk1" + str(i)]) for i in range(1, 4)]
+    opponent_pkms = [get_pokemon_from_api(battle_info["pk2" + str(i)]) for i in range(1, 4)]
 
-    # score = battle(creator_pkms, opponent_pkms)
+    score = battle(creator_pkms, opponent_pkms)
 
-    # winner = (
-    #     id_battle.player1.email if score["creator"] >
-    # score["opponent"] else id_battle.player2.email
-    # )
-    # send_battle_result(id_battle, winner, creator_pkms, opponent_pkms)
+    winner = (
+        id_battle.player1.email if score["creator"] > score["opponent"] else id_battle.player2.email
+    )
+    send_battle_result(id_battle, winner, creator_pkms, opponent_pkms)
 
     return render(request, "battling/battle_end.html")
 
