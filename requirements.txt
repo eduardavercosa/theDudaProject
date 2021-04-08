@@ -6,7 +6,7 @@
 #
 amqp==5.0.6
     # via kombu
-asgiref==3.3.1
+asgiref==3.3.4
     # via django
 backcall==0.2.0
     # via ipython
@@ -36,7 +36,7 @@ click==7.1.2
     #   click-didyoumean
     #   click-plugins
     #   click-repl
-decorator==5.0.5
+decorator==5.0.6
     # via ipython
 defusedxml==0.7.1
     # via odfpy
@@ -58,7 +58,7 @@ django-templated-email==2.3.0
     # via -r requirements.in
 django-webpack-loader==0.7.0
     # via -r requirements.in
-django==3.1.7
+django==3.2
     # via
     #   -r requirements.in
     #   django-import-export
@@ -109,7 +109,7 @@ pycparser==2.20
     # via cffi
 pygments==2.8.1
     # via ipython
-python-decouple==3.4
+python-decouple==3.3
     # via -r requirements.in
 pytz==2021.1
     # via
