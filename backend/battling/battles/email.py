@@ -1,14 +1,14 @@
-from urllib.parse import urljoin
+# from urllib.parse import urljoin
 
-from django.conf import settings
-from django.urls import reverse
+# from django.conf import settings
+# from django.urls import reverse
 
 from templated_email import send_templated_mail
 
 
 def send_battle_result(battle, winner, creator_pkms, opponent_pkms):
-    battle_detail_path = reverse("fights", args=None)
-    battle_details_url = urljoin(settings.HOST, battle_detail_path)
+    # battle_detail_path = reverse("fights", args=None)
+    # battle_details_url = urljoin(settings.HOST, battle_detail_path)
     send_templated_mail(
         template_name="battle_result",
         from_email="eduardavercosa@vinta.com.br",
@@ -28,6 +28,6 @@ def send_battle_result(battle, winner, creator_pkms, opponent_pkms):
                 opponent_pkms[1]["name"],
                 opponent_pkms[2]["name"],
             ],
-            "battle_details_url": battle_details_url,
+            # "battle_details_url": battle_details_url,
         },
     )
