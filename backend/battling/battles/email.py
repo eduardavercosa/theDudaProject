@@ -12,10 +12,10 @@ def send_battle_result(battle, winner, creator_pkms, opponent_pkms):
     send_templated_mail(
         template_name="battle_result",
         from_email="eduardavercosa@vinta.com.br",
-        recipient_list=[battle.player1.email, battle.player2.email],
+        recipient_list=[battle.creator.email, battle.opponent.email],
         context={
-            "battle_creator": battle.player1.email.split("@")[0],
-            "battle_opponent": battle.player2.email.split("@")[0],
+            "battle_creator": battle.creator.email.split("@")[0],
+            "battle_opponent": battle.opponent.email.split("@")[0],
             "battle_winner": winner,
             "battle_id": battle.id,
             "creator_team": [
