@@ -6,16 +6,6 @@ from django.db import models
 import requests
 
 
-class Gamer(models.Model):
-    name = models.CharField(max_length=200)
-
-    def publish(self):
-        self.save()
-
-    def __str__(self):
-        return self.name
-
-
 class Battle(models.Model):
     url = urljoin(settings.POKE_API_URL, "?limit=1000")
     response = requests.get(url)
@@ -42,13 +32,6 @@ class Battle(models.Model):
     pk21 = models.CharField(max_length=200, verbose_name="Pokemon 1:", null=True)
     pk22 = models.CharField(max_length=200, verbose_name="Pokemon 2:", null=True)
     pk23 = models.CharField(max_length=200, verbose_name="Pokemon 3:", null=True)
-
-    def publish(self):
-        self.save()
-
-
-class Status(models.Model):
-    sequence = models.IntegerField()
 
     def publish(self):
         self.save()
