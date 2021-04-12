@@ -1,64 +1,14 @@
-from urllib.parse import urljoin
-
-from django.conf import settings
 from django.shortcuts import redirect, render
-
-import requests
 
 from .battles.battle import battle
 from .battles.email import send_battle_result
 from .forms import RoundForm, RoundForm2
 from .models import Battle
+from .pokemons.pokemon_data import check_valid_team1, check_valid_team2, get_pokemon_from_api
 
 
 def home(request):
-    gamer = Battle.objects.all()
-    return render(request, "battling/home.html", {"gamer": gamer})
-
-
-def get_pokemon_from_api(poke_name):
-    url = urljoin(settings.POKE_API_URL, poke_name.lower())
-    response = requests.get(url)
-    data = response.json()
-    info = {
-        "poke_id": data["id"],
-        "name": data["name"],
-        "defense": data["stats"][3]["base_stat"],
-        "attack": data["stats"][4]["base_stat"],
-        "hp": data["stats"][5]["base_stat"],
-    }
-    return info
-
-
-def sumValid(pokemon):
-    sum_result = pokemon["attack"] + pokemon["defense"] + pokemon["hp"]
-    return sum_result
-
-
-def check_valid_team1(curr_form):
-    pokemon1 = get_pokemon_from_api(curr_form.pk11)
-    pokemon2 = get_pokemon_from_api(curr_form.pk12)
-    pokemon3 = get_pokemon_from_api(curr_form.pk13)
-    pokemon1_points = sumValid(pokemon1)
-    pokemon2_points = sumValid(pokemon2)
-    pokemon3_points = sumValid(pokemon3)
-    sum_pokemons_points = pokemon1_points + pokemon2_points + pokemon3_points
-    if sum_pokemons_points <= 600:
-        return True
-    return False
-
-
-def check_valid_team2(curr_form):
-    pokemon1 = get_pokemon_from_api(curr_form.pk21)
-    pokemon2 = get_pokemon_from_api(curr_form.pk22)
-    pokemon3 = get_pokemon_from_api(curr_form.pk23)
-    pokemon1_points = sumValid(pokemon1)
-    pokemon2_points = sumValid(pokemon2)
-    pokemon3_points = sumValid(pokemon3)
-    sum_pokemons_points = pokemon1_points + pokemon2_points + pokemon3_points
-    if sum_pokemons_points <= 600:
-        return True
-    return False
+    return render(request, "battling/home.html")
 
 
 def battle_new(request):
@@ -109,9 +59,8 @@ def round_new2(request):
 
 
 def battle_end(request):
-    battle_id = Battle.objects.latest("id").id
-    battle_info = Battle.objects.filter(id=battle_id).values()[0]
-    id_battle = Battle.objects.get(id=battle_id)
+    battle_id = Battle.objects.latest("id")
+    battle_info = Battle.objects.filter(id=battle_id.id).values()[0]
 
     creator_pkms = [get_pokemon_from_api(battle_info["pk1" + str(i)]) for i in range(1, 4)]
     opponent_pkms = [get_pokemon_from_api(battle_info["pk2" + str(i)]) for i in range(1, 4)]
@@ -119,17 +68,16 @@ def battle_end(request):
     score = battle(creator_pkms, opponent_pkms)
 
     winner = (
-        id_battle.player1.email if score["creator"] > score["opponent"] else id_battle.player2.email
+        battle_id.player1.email if score["creator"] > score["opponent"] else battle_id.player2.email
     )
-    send_battle_result(id_battle, winner, creator_pkms, opponent_pkms)
+    send_battle_result(battle_id, winner, creator_pkms, opponent_pkms)
 
     return render(request, "battling/battle_end.html")
 
 
 def fights(request):
-    battle_id = Battle.objects.latest("id").id
-    battle_info = Battle.objects.filter(id=battle_id).values()[0]
-    id_battle = Battle.objects.get(id=battle_id)
+    battle_id = Battle.objects.latest("id")
+    battle_info = Battle.objects.filter(id=battle_id.id).values()[0]
 
     creator_pkms = [get_pokemon_from_api(battle_info["pk1" + str(i)]) for i in range(1, 4)]
     opponent_pkms = [get_pokemon_from_api(battle_info["pk2" + str(i)]) for i in range(1, 4)]
@@ -137,7 +85,7 @@ def fights(request):
     score = battle(creator_pkms, opponent_pkms)
 
     winner = (
-        id_battle.player1.email if score["creator"] > score["opponent"] else id_battle.player2.email
+        battle_id.player1.email if score["creator"] > score["opponent"] else battle_id.player2.email
     )
 
     return render(
