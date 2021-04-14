@@ -7,7 +7,7 @@ from templated_email import send_templated_mail
 
 
 def send_battle_result(battle, winner, creator_pkms, opponent_pkms):
-    # battle_detail_path = reverse("fights", args=None)
+    # battle_detail_path = reverse("battle_details", args=None)
     # battle_details_url = urljoin(settings.HOST, battle_detail_path)
     send_templated_mail(
         template_name="battle_result",

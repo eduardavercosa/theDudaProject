@@ -6,11 +6,11 @@ from . import views
 
 
 urlpatterns = [
-    path("", Home.as_view(), name="Home"),
-    path("create_battle", CreateBattle.as_view(), name="CreateBattle"),
-    path("invite/", Invite.as_view(), name="Invite"),
-    path("opponent/", Opponent.as_view(), name="Opponent"),
-    path("enter_battle", EnterBattle.as_view(), name="EnterBattle"),
-    path("winner/", views.fights, name="fights"),
+    path("", Home.as_view(), name="home"),
+    path("create_battle", CreateBattle.as_view(), name="create_battle"),
+    path("invite/", Invite.as_view(), name="invite"),
+    path("opponent/", Opponent.as_view(), name="opponent"),
+    path("enter_battle", EnterBattle.as_view(), name="enter_battle"),
     path("battle_end/", views.battle_end, name="battle_end"),
+    path("battle_details/", views.battle_details, name="battle_details"),
 ]

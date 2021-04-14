@@ -1,6 +1,7 @@
+# When changing names on the model remember to change here as well
 from django import forms
 
-from .models import Battle
+from battling.models import Battle
 
 
 class CreatorForm(forms.ModelForm):

@@ -14,12 +14,12 @@
       <th>hp</th>
     </tr>
 
-    {% for creator_pkm in creator_pkms %}
+    {% for pokemon in creator_pkms %}
     <tr>
-      <th> {{creator_pkm.name}}</th>
-      <th> {{creator_pkm.attack}}</th>
-      <th> {{creator_pkm.defense}}</th>
-      <th> {{creator_pkm.hp}}</th>
+      <th> {{pokemon.name}}</th>
+      <th> {{pokemon.attack}}</th>
+      <th> {{pokemon.defense}}</th>
+      <th> {{pokemon.hp}}</th>
     </tr>
     {% endfor %}
 
@@ -34,12 +34,12 @@
       <th>hp</th>
     </tr>
 
-    {% for opponent_pkm in opponent_pkms %}
+    {% for pokemon in opponent_pkms %}
     <tr>
-      <th> {{opponent_pkm.name}}</th>
-      <th> {{opponent_pkm.attack}}</th>
-      <th> {{opponent_pkm.defense}}</th>
-      <th> {{opponent_pkm.hp}}</th>
+      <th> {{pokemon.name}}</th>
+      <th> {{pokemon.attack}}</th>
+      <th> {{pokemon.defense}}</th>
+      <th> {{pokemon.hp}}</th>
     </tr>
     {% endfor %}
 
