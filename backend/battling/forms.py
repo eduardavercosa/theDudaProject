@@ -1,15 +1,16 @@
+# When changing names on the model remember to change here as well
 from django import forms
 
-from .models import Battle
+from battling.models import Battle
 
 
-class RoundForm(forms.ModelForm):
+class CreatorForm(forms.ModelForm):
     class Meta:
         model = Battle
-        fields = ("player1", "player2", "pk11", "pk12", "pk13")
+        fields = ("creator", "opponent", "c_pokemon_1", "c_pokemon_2", "c_pokemon_3")
 
 
-class RoundForm2(forms.ModelForm):
+class OpponentForm(forms.ModelForm):
     class Meta:
         model = Battle
-        fields = ("pk21", "pk22", "pk23")
+        fields = ("o_pokemon_1", "o_pokemon_2", "o_pokemon_3")

@@ -3,8 +3,8 @@
 {% block content %}
   <div class="teste">
     <p class="title_battle">Choose your pokemons!</p>
-    <form method="post" class="battle-form">{% csrf_token %}
-      {{ form_round2.as_p }}
+    <form method="POST" class="battle-form">{% csrf_token %}
+      {{ form.as_p }}
       <input type="submit" value="Next" class="button_next">
       <div class="msg_error">
         {% if message %}

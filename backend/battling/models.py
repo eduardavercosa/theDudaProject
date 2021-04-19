@@ -12,26 +12,26 @@ class Battle(models.Model):
     data = response.json()
 
     id = models.AutoField(primary_key=True)
-    player1 = models.ForeignKey(
+    creator = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
         related_name="+",
         verbose_name="You are:",
         null=True,
     )
-    player2 = models.ForeignKey(
+    opponent = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
         related_name="+",
         verbose_name="Opponent:",
         null=True,
     )
-    pk11 = models.CharField(max_length=200, verbose_name="Pokemon 1:", null=True)
-    pk12 = models.CharField(max_length=200, verbose_name="Pokemon 2:", null=True)
-    pk13 = models.CharField(max_length=200, verbose_name="Pokemon 3:", null=True)
-    pk21 = models.CharField(max_length=200, verbose_name="Pokemon 1:", null=True)
-    pk22 = models.CharField(max_length=200, verbose_name="Pokemon 2:", null=True)
-    pk23 = models.CharField(max_length=200, verbose_name="Pokemon 3:", null=True)
+    c_pokemon_1 = models.CharField(max_length=200, verbose_name="Pokemon 1:", null=True)
+    c_pokemon_2 = models.CharField(max_length=200, verbose_name="Pokemon 2:", null=True)
+    c_pokemon_3 = models.CharField(max_length=200, verbose_name="Pokemon 3:", null=True)
+    o_pokemon_1 = models.CharField(max_length=200, verbose_name="Pokemon 1:", null=True)
+    o_pokemon_2 = models.CharField(max_length=200, verbose_name="Pokemon 2:", null=True)
+    o_pokemon_3 = models.CharField(max_length=200, verbose_name="Pokemon 3:", null=True)
 
     def publish(self):
         self.save()
