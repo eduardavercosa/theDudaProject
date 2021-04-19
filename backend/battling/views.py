@@ -26,9 +26,9 @@ class CreateBattle(CreateView):
     form_class = CreatorForm
     template_name = "battling/create_battle.html"
 
+    # This post method can also be removed in favor of the default implementation
     def post(self, request, *args, **kwargs):
-        battle_field = self.model.objects.latest("id")
-        form = self.form_class(request.POST, instance=battle_field)
+        form = self.form_class(request.POST)
         # This type of validation should be on the form CreatorForm
         if form.is_valid():
             round_battle = form.save(commit=False)
