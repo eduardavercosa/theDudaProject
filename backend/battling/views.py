@@ -49,9 +49,9 @@ class EnterBattle(UpdateView):
     template_name = "battling/enter_battle.html"
     success_url = reverse_lazy("battle_end")
 
-    # def get_object(self):
-    #     id_ = Battle.objects.latest("id").id
-    #     return get_object_or_404(Battle, id=id_)
+    def get_battle(self):
+        id_ = Battle.objects.last().id
+        return get_object_or_404(Battle, id=id_)
 
     def form_valid(self, form):
         pokemon = form.cleaned_data
@@ -61,12 +61,9 @@ class EnterBattle(UpdateView):
         form.instance.pokemon_3 = pokemon["opponent_pokemon_3"]
 
         form.instance.save()
-        id_ = Battle.objects.latest("id").id
 
-        form.instance.battle_id = get_object_or_404(Battle, id=id_)
-        run_battle_and_send_email(form.instance.battle_id.id)
-
-        form.instance.battle_id.save()
+        form.instance.battle_id = self.get_battle().id
+        run_battle_and_send_email(form.instance.battle_id)
 
         return super().form_valid(form)
 
