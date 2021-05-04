@@ -8,18 +8,20 @@ class Battle(models.Model):
     creator = models.ForeignKey(User, on_delete=models.CASCADE, related_name="creator_battles")
     opponent = models.ForeignKey(User, on_delete=models.CASCADE, related_name="opponent_battles")
 
-    creator_pokemon_1 = models.ForeignKey(Pokemon, on_delete=models.CASCADE, related_name="+")
-    creator_pokemon_2 = models.ForeignKey(Pokemon, on_delete=models.CASCADE, related_name="+")
-    creator_pokemon_3 = models.ForeignKey(Pokemon, on_delete=models.CASCADE, related_name="+")
-
-    opponent_pokemon_1 = models.ForeignKey(
-        Pokemon, on_delete=models.CASCADE, related_name="+", null=True
-    )
-    opponent_pokemon_2 = models.ForeignKey(
-        Pokemon, on_delete=models.CASCADE, related_name="+", null=True
-    )
-    opponent_pokemon_3 = models.ForeignKey(
-        Pokemon, on_delete=models.CASCADE, related_name="+", null=True
-    )
-
     winner = models.ForeignKey(User, on_delete=models.CASCADE, related_name="battle_win", null=True)
+
+
+class Team(models.Model):
+    battle = models.ForeignKey(Battle, on_delete=models.CASCADE, related_name="teams")
+    trainer = models.ForeignKey(User, on_delete=models.CASCADE, related_name="teams")
+    pokemons = models.ManyToManyField(Pokemon, related_name="teams", through="PokemonTeam")
+
+
+class PokemonTeam(models.Model):
+    team = models.ForeignKey(Team, on_delete=models.CASCADE, related_name="teams")
+    pokemon = models.ForeignKey(Pokemon, on_delete=models.CASCADE, related_name="+")
+    order = models.PositiveIntegerField()
+
+    class Meta:
+        ordering = ["order"]
+        unique_together = [("team", "pokemon")]
