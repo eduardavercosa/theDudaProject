@@ -1,10 +1,12 @@
+from django.contrib import messages
 from django.shortcuts import get_object_or_404
 from django.urls import reverse_lazy
 from django.views.generic.base import TemplateView
-from django.views.generic.edit import CreateView, UpdateView
+from django.views.generic.detail import DetailView
+from django.views.generic.edit import CreateView
 
 from battling.forms import CreatorForm, OpponentForm
-from battling.models import Battle
+from battling.models import Battle, PokemonTeam, Team
 from services.battles import run_battle_and_send_email
 
 
@@ -12,41 +14,34 @@ class Home(TemplateView):
     template_name = "battling/home.html"
 
 
-class Invite(TemplateView):
-    template_name = "battling/invite.html"
-
-
-class Opponent(TemplateView):  # will become an email
-    template_name = "battling/opponent.html"
-
-
-class BattleEnd(TemplateView):
-    template_name = "battling/battle_end.html"
-
-
 class CreateBattle(CreateView):
     model = Battle
     form_class = CreatorForm
     template_name = "battling/create_battle.html"
-    success_url = reverse_lazy("invite")
+    success_url = reverse_lazy("home")
 
     def form_valid(self, form):
-        pokemon = form.cleaned_data
-
-        form.instance.pokemon_1 = pokemon["creator_pokemon_1"]
-        form.instance.pokemon_2 = pokemon["creator_pokemon_2"]
-        form.instance.pokemon_3 = pokemon["creator_pokemon_3"]
-
+        form.instance.creator = self.request.user
         form.instance.save()
+
+        Team.objects.create(battle=form.instance, trainer=self.request.user)
+        pokemons = form.cleaned_data
+
+        for i in range(1, 4):
+            PokemonTeam.objects.create(
+                team=Team.objects.last(), pokemon=pokemons["pokemon_" + str(i)], order=i
+            )
+
+        messages.success(self.request, "Your battle was created!")
 
         return super().form_valid(form)
 
 
-class EnterBattle(UpdateView):
+class EnterBattle(CreateView):
     model = Battle
     form_class = OpponentForm
     template_name = "battling/enter_battle.html"
-    success_url = reverse_lazy("battle_end")
+    success_url = reverse_lazy("home")
 
     def get_battle(self):
         id_ = Battle.objects.last().id
@@ -67,6 +62,37 @@ class EnterBattle(UpdateView):
         return super().form_valid(form)
 
 
-# Had to change it, otherwise it wouldn't commit! But it's not ready
-class DetailBattle(TemplateView):
+class DetailBattle(DetailView):
     template_name = "battling/battle_details.html"
+    model = Battle
+
+    def get_battle(self):
+        id_ = Battle.objects.last().id
+        return get_object_or_404(Battle, pk=id_)
+
+    context_object_name = "get_battle"
+
+
+# def battle_details(request):
+#     battle_id = Battle.objects.latest("id")
+#     battle_info = Battle.objects.filter(id=battle_id.id).values()[0]
+
+#     # get the pokemons ids from the battles
+#     creator_pokemons_id = [battle_info["creator_pokemon_" + str(i) + "_id"] for i in range(1, 4)]
+#   opponent_pokemons_id = [battle_info["opponent_pokemon_" + str(i) + "_id"] for i in range(1, 4)]
+
+#     # get the pokemons from the DB
+#     creator_pokemon_list = [Pokemon.objects.filter(id=j).values()[0] for j in creator_pokemons_id]
+#   opponent_pokemon_list = [Pokemon.objects.filter(id=j).values()[0] for j in opponent_pokemons_id]
+
+#     return render(
+#         request,
+#         "battling/battle_details.html",
+#         {
+#             "winner": "jaja",  # battle_id.winner.email.split("@")[0],
+#             "creator": battle_id.creator.email.split("@")[0],
+#             "opponent": battle_id.opponent.email.split("@")[0],
+#             "creator_pkms": creator_pokemon_list,
+#             "opponent_pkms": opponent_pokemon_list,
+#         },
+#     )

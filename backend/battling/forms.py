@@ -6,19 +6,19 @@ from pokemon.models import Pokemon
 
 
 class PokemonForm(forms.ModelForm):
-    creator_pokemon_1 = forms.ModelChoiceField(
+    pokemon_1 = forms.ModelChoiceField(
         label="Pokemon 1",
         queryset=Pokemon.objects.all(),
         widget=forms.TextInput,
         required=True,
     )
-    creator_pokemon_2 = forms.ModelChoiceField(
+    pokemon_2 = forms.ModelChoiceField(
         label="Pokemon 2",
         queryset=Pokemon.objects.all(),
         widget=forms.TextInput,
         required=True,
     )
-    creator_pokemon_3 = forms.ModelChoiceField(
+    pokemon_3 = forms.ModelChoiceField(
         label="Pokemon 3",
         queryset=Pokemon.objects.all(),
         widget=forms.TextInput,
@@ -30,9 +30,9 @@ class PokemonForm(forms.ModelForm):
 
         is_pokemon_sum_valid = valid_team(
             [
-                self.cleaned_data["creator_pokemon_1"],
-                self.cleaned_data["creator_pokemon_2"],
-                self.cleaned_data["creator_pokemon_3"],
+                self.cleaned_data["pokemon_1"],
+                self.cleaned_data["pokemon_2"],
+                self.cleaned_data["pokemon_3"],
             ]
         )
 
@@ -83,11 +83,10 @@ class CreatorForm(PokemonForm):
     class Meta:
         model = Battle
         fields = (
-            "creator",
             "opponent",
-            "creator_pokemon_1",
-            "creator_pokemon_2",
-            "creator_pokemon_3",
+            "pokemon_1",
+            "pokemon_2",
+            "pokemon_3",
         )
 
 
